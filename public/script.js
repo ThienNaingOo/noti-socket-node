@@ -6,7 +6,7 @@ const header = document.querySelector("#header")
 
 const publicVapidKey = 'BCjLrm9PnKTU65e3s6kEh7AqKVWbG20OWkXfb_E1ILENJLp1NCjqWRFz8giR2HK61IFaGP7ZzscA6GobgxeLj68';
 
-const socket = io("http://172.20.80.103:8080")
+const socket = io("https://noti-socket-node.onrender.com/")
 let messages = []
 
 function urlBase64ToUint8Array(base64String) {
@@ -39,7 +39,6 @@ socket.on("response", data => {
   const node = document.createTextNode(data)
   msg.appendChild(node)
   notify.appendChild(msg)
-  // notify.children
   header.style.backgroundColor = "#3F4E4F"
 })
 
