@@ -1,11 +1,11 @@
 self.addEventListener("push", e => {
   const data = e.data.json();
   self.registration.showNotification(
-    data.message, // title of the notification
+    data.title,
     {
-      body: "Push notification from section.io", //the body of the push notification
-      image: "https://pixabay.com/vectors/bell-notification-communication-1096280/",
-      icon: "https://pixabay.com/vectors/bell-notification-communication-1096280/" // icon 
+      body: 'Message from Socket Server Nodejs',
+      image: "https://noti-socket-node.onrender.com/img/icons/logo-72.png",
+      icon: "https://noti-socket-node.onrender.com/img/icons/logo-72.png" // icon 
     }
   );
 });
@@ -14,10 +14,9 @@ const staticNotiSocket = "dev-noti-socket-node"
 const assets = [
   "/",
   "/index.html",
-  "/public/index.css",
-  "/public/script.css",
-  "/public/worker.css",
-  "/index.js"
+  "/index.css",
+  "/script.js",
+  "/worker.js"
 ]
 
 self.addEventListener("install", installEvent => {

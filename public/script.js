@@ -7,7 +7,7 @@ const header = document.querySelector("#header")
 const publicVapidKey = 'BCjLrm9PnKTU65e3s6kEh7AqKVWbG20OWkXfb_E1ILENJLp1NCjqWRFz8giR2HK61IFaGP7ZzscA6GobgxeLj68';
 
 const socket = io("https://noti-socket-node.onrender.com/")
-// const socket = io("http://172.20.10.49:8080/")
+// const socket = io("http://localhost:8080/")
 let messages = []
 
 function urlBase64ToUint8Array(base64String) {
@@ -29,7 +29,6 @@ function printMessage(e) {
   e.preventDefault()
   const msg = document.getElementById("message")
   socket.emit("message", msg.value)
-  // console.log(msg.value);
 }
 socket.on("response", data => {
   if ('serviceWorker' in navigator) {
@@ -44,13 +43,11 @@ socket.on("response", data => {
 })
 
 async function send(data) {
-  console.log('send');
-  //register service worker
+  console.log('send--->',data);
   const register = await navigator.serviceWorker.register('/worker.js', {
     scope: '/'
   });
 
-  //register push
   const subscription = await register.pushManager.subscribe({
     userVisibleOnly: true,
 
@@ -59,7 +56,6 @@ async function send(data) {
   })
     .catch((error) => console.log(error))
 
-  //Send push notification
   await fetch("/subscribe?message=" + data, {
     method: "POST",
     body: JSON.stringify(subscription),
@@ -77,14 +73,14 @@ function notifyme() {
   }
   if (Notification.permission === "granted") {
 
-    const notification = new Notification("Hi there!");
+    const notification = new Notification("Notification permission allowed.!");
 
   } else if (Notification.permission !== "denied") {
 
     Notification.requestPermission().then((permission) => {
 
       if (permission === "granted") {
-        const notification = new Notification("Hi there!");
+        const notification = new Notification("Notification permission allowed.!");
 
       }
     });
@@ -97,7 +93,7 @@ button1.addEventListener("click", notifyme)
 if (navigator.serviceWorker) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
-      .register("/serviceWorker.js")
+      .register("/worker.js")
       .then(res => console.log("service worker registered"))
       .catch(err => console.log("service worker not registered", err))
   })
