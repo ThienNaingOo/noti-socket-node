@@ -6,7 +6,8 @@ const header = document.querySelector("#header")
 
 const publicVapidKey = 'BCjLrm9PnKTU65e3s6kEh7AqKVWbG20OWkXfb_E1ILENJLp1NCjqWRFz8giR2HK61IFaGP7ZzscA6GobgxeLj68';
 
-const socket = io("https://noti-socket-node.onrender.com/")
+// const socket = io("https://noti-socket-node.onrender.com/")
+const socket = io("http://172.20.10.49:8080/")
 let messages = []
 
 function urlBase64ToUint8Array(base64String) {
@@ -92,3 +93,12 @@ function notifyme() {
 
 button.addEventListener("click", printMessage)
 button1.addEventListener("click", notifyme)
+
+if (navigator.serviceWorker) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker
+      .register("/serviceWorker.js")
+      .then(res => console.log("service worker registered"))
+      .catch(err => console.log("service worker not registered", err))
+  })
+}
